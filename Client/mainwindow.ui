@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Mainwindow</class>
+ <widget class="QDialog" name="Mainwindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>643</width>
+    <height>491</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog{
+	
+	
+	background-color: rgb(85, 170, 255);
+	
+}
+QListWidget{
+	background-color: rgb(255, 255, 255);
+}</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>30</y>
+     <width>72</width>
+     <height>15</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;等线&quot;;</string>
+   </property>
+   <property name="text">
+    <string>用户列表</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_Send">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>440</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+font: 9pt &quot;等线&quot;;
+	color: rgb(0, 0, 0);
+ border-style: outset;
+     border-width: 1px;
+     border-radius: 6px;
+     border-color: beige;    
+     padding: 6px;
+	
+	background-color: rgb(137, 194, 255);
+}
+QPushButton:pressed{
+                   background-color:rgba(100,255,100,200);
+                   border-color:rgba(255,255,255,30);
+                   border-style:inset;
+                   color:rgba(0,0,0,100);
+                   }
+QPushButton:hover{
+	
+	
+	
+	background-color: rgb(162, 212, 255);
+                   border-color:rgba(255,255,255,200);
+                   
+	color: rgb(0, 0, 0);
+                   }</string>
+   </property>
+   <property name="text">
+    <string>发送消息</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="listWidget">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>50</y>
+     <width>121</width>
+     <height>381</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"> border-style: outset;
+     border-width: 1px;
+     border-radius: 4px;
+border-color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>320</y>
+     <width>491</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"> border-style: outset;
+     border-width: 1px;
+     border-radius: 4px;
+border-color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <widget class="QTextBrowser" name="textBrowser">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>50</y>
+     <width>491</width>
+     <height>261</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"> border-style: outset;
+     border-width: 1px;
+     border-radius: 4px;
+border-color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_Connect">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>0</y>
+     <width>111</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+QPushButton{
+font: 7pt &quot;幼圆&quot;;
+color:rgb(108, 108, 108);
+ border-style: outset;
+    
+     border-radius: 6px;
+     border-color: beige;    
+     padding: 6px;
+	background-color: rgb(255, 255, 255);
+border-top:0px solid #e8f3f9;
+background:  transparent;
+	image: url(:/icon/连接.png);
+}
+QPushButton:pressed{
+	color: rgb(255, 255, 255);
+                   border-color:rgba(255,255,255,30);
+                   border-style:inset;
+                   color:rgba(0,0,0,100);
+                   }
+QPushButton:hover{
+	background-color:  rgb(255, 255, 255);
+                   border-color: rgb(255, 255, 255);
+                   
+	border-top:0px solid #e8f3f9;
+background:  transparent;
+	
+	color: rgb(11, 11, 11);
+                   }
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>81</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">image: url(:/icon/tubiao.png);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>10</y>
+     <width>71</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;Segoe Print&quot;;
+color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>Chat </string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

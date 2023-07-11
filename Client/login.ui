@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Login</class>
+ <widget class="QDialog" name="Login">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>411</width>
+    <height>372</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog{
+	background-color: rgb(85, 170, 255);
+}
+QTableWidget{
+	color: rgb(255, 255, 255);
+}
+</string>
+  </property>
+  <widget class="QPushButton" name="pushButton_Register">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>330</y>
+     <width>93</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+QPushButton{
+font: 7pt &quot;幼圆&quot;;
+color:rgb(108, 108, 108);
+ border-style: outset;
+    
+     border-radius: 6px;
+     border-color: beige;    
+     padding: 6px;
+	background-color: rgb(255, 255, 255);
+border-top:0px solid #e8f3f9;
+background:  transparent;
+}
+QPushButton:pressed{
+	color: rgb(255, 255, 255);
+                   border-color:rgba(255,255,255,30);
+                   border-style:inset;
+                   color:rgba(0,0,0,100);
+                   }
+QPushButton:hover{
+	background-color:  rgb(255, 255, 255);
+                   border-color: rgb(255, 255, 255);
+                   
+	border-top:0px solid #e8f3f9;
+background:  transparent;
+	
+	color: rgb(11, 11, 11);
+                   }
+</string>
+   </property>
+   <property name="text">
+    <string>注册账号</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_Forget">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>330</y>
+     <width>93</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+QPushButton{
+font: 7pt &quot;幼圆&quot;;
+color:rgb(108, 108, 108);
+ border-style: outset;
+    
+     border-radius: 6px;
+     border-color: beige;    
+     padding: 6px;
+	background-color: rgb(255, 255, 255);
+border-top:0px solid #e8f3f9;
+background:  transparent;
+}
+QPushButton:pressed{
+	color: rgb(255, 255, 255);
+                   border-color:rgba(255,255,255,30);
+                   border-style:inset;
+                   color:rgba(0,0,0,100);
+                   }
+QPushButton:hover{
+	background-color:  rgb(255, 255, 255);
+                   border-color: rgb(255, 255, 255);
+                   
+	border-top:0px solid #e8f3f9;
+background:  transparent;
+	
+	color: rgb(11, 11, 11);
+                   }
+</string>
+   </property>
+   <property name="text">
+    <string>忘记密码？</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_Login">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>290</y>
+     <width>221</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+font: 9pt &quot;幼圆&quot;;
+color: rgb(255, 255, 255);
+ border-style: outset;
+     border-width: 1px;
+     border-radius: 6px;
+     border-color: beige;    
+     padding: 6px;
+	background-color: rgb(80, 160, 240);
+}
+QPushButton:pressed{
+                   background-color:rgba(100,255,100,200);
+                   border-color:rgba(255,255,255,30);
+                   border-style:inset;
+                   color:rgba(0,0,0,100);
+                   }
+QPushButton:hover{
+	
+	background-color: rgb(85, 170, 255);
+                   border-color:rgba(255,255,255,200);
+                   
+	color: rgb(255, 255, 255);
+                   }</string>
+   </property>
+   <property name="text">
+    <string>登录</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_Reme">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>250</y>
+     <width>91</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;幼圆&quot;;
+background-color: rgb(115, 115, 115);
+border-top:0px solid #e8f3f9;
+background:  transparent;</string>
+   </property>
+   <property name="text">
+    <string>记住密码</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_Auto">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>250</y>
+     <width>91</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;幼圆&quot;;
+background-color: rgb(115, 115, 115);
+border-top:0px solid #e8f3f9;
+background:  transparent;</string>
+   </property>
+   <property name="text">
+    <string>自动登录</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_Name">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>140</y>
+     <width>151</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: outset;
+     border-width: 1px;
+    
+border-color: beige;
+border-bottom-color: rgb(108, 108, 108);
+border-right-color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_Password">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>190</y>
+     <width>151</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: outset;
+     border-width: 1px;
+    
+border-color: beige;
+border-bottom-color: rgb(108, 108, 108);
+border-right-color: rgb(255, 255, 255);</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>140</y>
+     <width>81</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">image: url(:/icon/yonghu.png);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>190</y>
+     <width>81</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">image: url(:/icon/mima.png);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="tableWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>120</y>
+     <width>421</width>
+     <height>261</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>-20</x>
+     <y>0</y>
+     <width>91</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">image: url(:/icon/tubiao.png);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>10</y>
+     <width>72</width>
+     <height>15</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;Segoe Print&quot;;
+color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>Chat</string>
+   </property>
+  </widget>
+  <zorder>tableWidget</zorder>
+  <zorder>pushButton_Register</zorder>
+  <zorder>pushButton_Forget</zorder>
+  <zorder>pushButton_Login</zorder>
+  <zorder>checkBox_Reme</zorder>
+  <zorder>checkBox_Auto</zorder>
+  <zorder>lineEdit_Name</zorder>
+  <zorder>lineEdit_Password</zorder>
+  <zorder>label</zorder>
+  <zorder>label_2</zorder>
+  <zorder>label_3</zorder>
+  <zorder>label_4</zorder>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

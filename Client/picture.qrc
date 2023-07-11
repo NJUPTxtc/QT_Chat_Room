@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icon/0.jpg</file>
+        <file>icon/111.jpg</file>
+        <file>icon/1112.jpg</file>
+        <file>icon/1212.jpg</file>
+        <file>icon/1313.jpg</file>
+        <file>icon/1414.jpg</file>
+        <file>icon/1515.jpg</file>
+        <file>icon/1717.jpg</file>
+        <file>icon/friend.ico</file>
+        <file>icon/friend1.ico</file>
+        <file>icon/friend2.ico</file>
+        <file>icon/friend3.ico</file>
+        <file>icon/friend4.ico</file>
+        <file>icon/services.ico</file>
+        <file>icon/IMG_20210708_164440.png</file>
+    </qresource>
+</RCC>

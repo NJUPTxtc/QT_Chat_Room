@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FindPsd</class>
+ <widget class="QDialog" name="FindPsd">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>410</width>
+    <height>371</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog{
+	
+	background-color: rgb(85, 170, 255);
+	
+}
+</string>
+  </property>
+  <widget class="QPushButton" name="pushButton_">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>290</y>
+     <width>81</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+font: 9pt &quot;幼圆&quot;;
+color: rgb(255, 255, 255);
+ border-style: outset;
+     border-width: 1px;
+     border-radius: 6px;
+     border-color: beige;    
+     padding: 6px;
+	background-color: rgb(80, 160, 240);
+}
+QPushButton:pressed{
+                   background-color:rgba(100,255,100,200);
+                   border-color:rgba(255,255,255,30);
+                   border-style:inset;
+                   color:rgba(0,0,0,100);
+                   }
+QPushButton:hover{
+	
+	background-color: rgb(85, 170, 255);
+                   border-color:rgba(255,255,255,200);
+                   
+	color: rgb(255, 255, 255);
+                   }</string>
+   </property>
+   <property name="text">
+    <string>确定</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>290</y>
+     <width>81</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+font: 9pt &quot;幼圆&quot;;
+color: rgb(255, 255, 255);
+ border-style: outset;
+     border-width: 1px;
+     border-radius: 6px;
+     border-color: beige;    
+     padding: 6px;
+	background-color: rgb(80, 160, 240);
+}
+QPushButton:pressed{
+                   background-color:rgba(100,255,100,200);
+                   border-color:rgba(255,255,255,30);
+                   border-style:inset;
+                   color:rgba(0,0,0,100);
+                   }
+QPushButton:hover{
+	
+	background-color: rgb(85, 170, 255);
+                   border-color:rgba(255,255,255,200);
+                   
+	color: rgb(255, 255, 255);
+                   }</string>
+   </property>
+   <property name="text">
+    <string>取消</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_Name">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>170</y>
+     <width>121</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: outset;
+     border-width: 1px;
+     border-radius: 6px;</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_Mail">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>230</y>
+     <width>121</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-style: outset;
+     border-width: 1px;
+     border-radius: 6px;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>160</y>
+     <width>111</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(0, 0, 0);
+font: 10pt &quot;等线&quot;;
+border-top:0px solid #e8f3f9;
+background:  transparent;</string>
+   </property>
+   <property name="text">
+    <string>用户名</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>230</y>
+     <width>81</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(0, 0, 0);
+font: 10pt &quot;等线&quot;;
+border-top:0px solid #e8f3f9;
+background:  transparent;</string>
+   </property>
+   <property name="text">
+    <string>邮件</string>
+   </property>
+  </widget>
+  <widget class="QTableWidget" name="tableWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>111</y>
+     <width>411</width>
+     <height>261</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>40</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">image: url(:/icon/zhaohuimima.png);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <zorder>tableWidget</zorder>
+  <zorder>pushButton_</zorder>
+  <zorder>pushButton_2</zorder>
+  <zorder>lineEdit_Name</zorder>
+  <zorder>lineEdit_Mail</zorder>
+  <zorder>label</zorder>
+  <zorder>label_2</zorder>
+  <zorder>label_3</zorder>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

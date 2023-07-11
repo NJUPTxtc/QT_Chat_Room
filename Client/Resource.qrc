@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icon/zhaohuimima.png</file>
+        <file>icon/zhuce.png</file>
+        <file>icon/连接.png</file>
+        <file>icon/tubiao.png</file>
+        <file>icon/yonghu.png</file>
+        <file>icon/mima.png</file>
+        <file>icon/3E9ABF37028B166DE4B5DCF1AAE1D14F.jpg</file>
+        <file>icon/1C0A56ED7965651A3C7252C7C8BC4CCD.jpg</file>
+        <file>icon/D4B38D4B97344F4FAB55F710B43E5AF1.jpg</file>
+        <file>icon/D9C25CA4F04B83068A9E07548C2468B7.jpg</file>
+        <file>icon/865CE62027A75117E225A3104DEBF9F1.jpg</file>
+        <file>icon/D3034F351F85E131D25BCDAD3A36EA8C.jpg</file>
+        <file>icon/723E6423CC8B247CE0D903A5D4688A55.jpg</file>
+        <file>icon/468B317D6178792F1728B38937B1D143.jpg</file>
+        <file>icon/48C4A5DDA8AAADB312C726576B13B22E.jpg</file>
+        <file>icon/0C89F7B185A1EA66CE5B1148061C5622.jpg</file>
+        <file>icon/AEEC264012EB9C71B036E637F0678EFA.jpg</file>
+        <file>icon/3FAD45AFADED34F9854AA7289533884F.jpg</file>
+        <file>icon/2B589D8C0959A43101DA9A3A21CB713A.jpg</file>
+        <file>icon/发送文件.png</file>
+        <file>icon/friend1.ico</file>
+    </qresource>
+</RCC>

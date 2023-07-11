@@ -1,0 +1,238 @@
+#include "server.h"
+#include "ui_server.h"
+#include "mysql.h"
+
+//初始化服务器端界面,监听指定端口并处理客户端的连接请求,同时加载数据库中的用户列表到UI界面的列表框中
+Server::Server(QWidget *parent) : QMainWindow(parent), ui(new Ui::Server) {
+	qDebug() << "到达服务器" << endl;
+	ui->setupUi(this);
+	this->server = new QTcpServer(this);//用于处理TCP连接
+	this->socket = new QTcpSocket(this);//用于处理TCP连接
+	int port = 6666;//监听的端口号
+    server->listen(QHostAddress::AnyIPv6, port);//将服务器端的server对象绑定到本机的某个端口上,使用AnyIPv6表示监听任意IPv6地址
+	//连接信号槽
+	connect(server, SIGNAL(newConnection()), this, SLOT(Connect())); //当有新的客户端连接时会触发该槽函数
+	connect(socket, SIGNAL(error(QAbstractSocket::SocketError)),
+	        this, SLOT(displayError(QAbstractSocket::SocketError)));//当错误发生时会触发该槽函数
+//    connect(socket,SIGNAL(readyRead()),this,SLOT(ReadMSG())); //连接成功则引发槽函数
+	connect(ui->listWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(doubleclicked(QListWidgetItem*))); //双击触发事件
+
+	//加载用户列表
+	QString str = NULL;
+	query = new QSqlQuery;
+	query->exec("select name from user ");
+
+	while (query->next()) {
+		QString str = query->value(0).toString();
+		QListWidgetItem *item = new QListWidgetItem;//用于显示用户列表中的一项
+		item->setText(str);      //设置列表项的文本
+		ui->listWidget->addItem(item);//将列表项添加到列表框中
+	}
+}
+
+Server::~Server() {
+	server->close();
+	delete ui;
+}
+
+int Server::checkLogIn(QString Name, QString Password) {//检查登陆
+	MySql *sql = new MySql();
+	int ret = sql->Login(Name, Password);
+	return ret;
+}
+
+bool Server::checkSignUp(QString Name, QString Password, QString Mail) {//检查注册
+	MySql *sql = new MySql();
+	bool ret = sql->Regist(Name, Password, Mail);
+	return ret;
+}
+
+int Server::findpwd(QString Name, QString Mail) {//找回密码
+	MySql *sql = new MySql();
+	int temp = sql->findpwd(Name, Mail);
+	return temp;
+}
+
+void Server::Connect() { //连接客户端和服务端
+	socket = server->nextPendingConnection();
+	qDebug() << "连接两端" << endl;
+	connect(socket, SIGNAL(readyRead()), this, SLOT(ReadMSG())); //获取来自客户端的数据
+}
+
+//接收从客户端传输过来的数据,通过前缀将它们分类,处理后发送回客户端或者服务器,这段代码可以说是服务器的重中之重,处理各种数据
+void Server::ReadMSG() { //读取来自客户端的数据
+	qDebug() << "读取客户端数据" << endl;
+    QString data = socket->readAll();  //读取客户端发送的数据
+	qDebug() << data;
+    QStringList list = data.split("#");//将从客户端读取的数据按照"#"字符进行拆分并存储在list中
+	bool ret = 0;
+	int temp = 0;
+	QString sendData = list[0];
+	QString password, str1, str2, str3, str4;
+	if (list[0] == "a") { //注册
+		qDebug() << "到达注册" << endl;
+        //注册验证
+        ret = checkSignUp(list[1], list[2], list[3]);
+		if (ret)
+			sendData = sendData + "#true";
+		else
+			sendData = sendData + "#false";
+        socket->write(sendData.toLatin1());//将结果发送给客户端
+	} else if (list[0] == "b") { //登录
+        //验证登录信息
+		temp = checkLogIn(list[1], list[2]);
+		if (temp == 1) {
+			query = new QSqlQuery;
+			query->exec(QString("update user set status='%1' where userName='%2'").arg(1).arg(list[1])); //设置数据库中的status为1
+			sendData = sendData + "#" + list[1] + "#true";
+		} else if (temp == 0)  sendData = sendData + "#false" + "#0";
+		else if (temp == 2)  sendData = sendData + "#false" + "#2";
+		else if (temp == 3)  sendData = sendData + "#false" + "#3";
+        socket->write(sendData.toUtf8());//将结果发送给客户端
+	} else if (list[0] == "c") { //找回密码
+        //验证找回密码的信息
+		temp = findpwd(list[1], list[2]);
+		if (temp == 0) sendData = sendData + "#false" + "#0";
+		else if (temp == 1) sendData = sendData + "#false" + "#1";
+		else if (temp == 2) sendData = sendData + "#false" + "#2";
+		else if (temp == 4) sendData = sendData + "#false" + "#4";
+		else {
+            //验证成功
+            //通过传入的用户名list[1]构建了一个SQL查询语句,该语句会根据用户名在数据库中查询对应的密码
+			QString str = QString("select Password from user where userName='%1'").arg(list[1]);
+			query = new QSqlQuery;
+			query->exec(str);
+
+            //通过循环将查询结果保存在变量password中
+			while (query->next()) {
+				password = query->value(0).toString();
+			}
+			sendData = sendData + "#true" + "#" + password;
+		}
+        socket->write(sendData.toUtf8());//将结果发送给客户端
+	} else if (list[0] == "d") { //退出登录
+		query = new QSqlQuery;
+        //调用updateStatus函数将数据库中用户的状态更新为0
+		query->exec(QString("update user set status='%1' where userName='%2'").arg(0).arg(list[1])); //设置数据库中的status为0
+
+	} else if (list[0] == "e") { //返回用户列表
+//        query->exec(QString("update user set status='%1' where userName='%2'").arg(1).arg(list[1])); //设置数据库中的status为1
+		query = new QSqlQuery;
+        //根据userName更新"user" 表中的为CIP和CPort
+		query->exec(QString("update user set CIP='%1' , CPort='%2' where userName='%3'").arg(list[2]).arg(list[3]).arg(list[1]));
+		qDebug() << list[2] << list[3] << list[1] << "6666666666666666666666666" << endl;
+		query = new QSqlQuery;
+        //查询 "user" 表中的所有userName
+		query->exec("select userName from user");
+		QString str6 = NULL;
+
+        //逐行读取查询结果,并将每一行的结果以 "#" 分隔后拼接成一个字符串str6
+		while (query->next()) {
+			str1 = query->value(0).toString();
+			str6 = str6 + "#" + str1;
+		}
+		query = new QSqlQuery;
+        //查询 "msg" 表中满足name2=list[1]条件的记录的name1和MSG字段的值
+		query->exec(QString("select name1,MSG from msg where name2='%1'").arg(list[1]));
+
+        //查询结果的每一行的name1和MSG的值依次赋给相str3和str4
+		while (query->next()) {
+			str3 = query->value(0).toString();
+			str4 = query->value(1).toString();
+		}
+		if (str4 != NULL) {
+			str3 = str3 + ":" + str4;
+		}
+		sendData = sendData + str6 + "#" + "end" + "#" + str3;
+        socket->write(sendData.toUtf8());//将sendData的UTF-8编码写入socket中
+	} else if (list[0] == "f") { //群聊消息
+		qDebug() << "群聊";
+		//获取系统时间
+		QDateTime time = QDateTime::currentDateTime();
+		QString Time = time.toString("yyyy-MM-dd ddd hh:mm:ss");
+        //将系统时间追加到ui->textBrowser中
+		ui->textBrowser->append(Time);
+        //将list[1]和list[2]拼接成一个字符串,并追加到ui->textBrowser中
+		ui->textBrowser->append(list[1] + ":" + list[2]);
+		sendData = sendData + "#" + list[1] + "#" + list[2];
+		query = new QSqlQuery;
+		int str5;
+		qDebug() << "群聊      1";
+        //查询status为1的用户的CIP和CPort
+		query->exec(QString("select CIP, CPort from user where status = '%1'").arg(1));
+        //循环遍历查询结果
+		while (query->next()) {
+            //获取查询结果中的CIP和CPort
+			QString str1 = query->value(0).toString();
+			str5 = query->value(1).toInt();
+			socket = new QTcpSocket();
+			socket->abort();   //取消已有的连接
+			socket->connectToHost(str1, str5); //连接到客户端
+            socket->waitForConnected();//等待连接成功
+            qDebug() << sendData + "  "+ str1 + "   " +str5;
+            socket->write(sendData.toUtf8());//将sendData转为UTF-8编码并发送
+		}
+	} else if (list[0] == "g") { //私聊
+		qDebug() << "到达服务器的私聊";
+		QString Status;
+		query = new QSqlQuery;
+        //查询user表中userName为list[1]的记录的status字段的值
+		query->exec(QString("select status from user where userName='%1'").arg(list[1]));
+		while (query->next()) {
+            Status = query->value(0).toString();//将status字段的值赋给Status变量
+		}
+		if (Status == "1") {
+            //查询user表中userName为list[1]的记录的CIP和CPort字段的值
+			query->exec(QString("select CIP, CPort from user where userName = '%1'").arg(list[1]));
+			while (query->next()) {
+                str1 = query->value(0).toString();//将CIP字段的值赋给str1变量
+                str2 = query->value(1).toString();//将CPort字段的值赋给str2变量
+			}
+			sendData = sendData + "#" + list[1] + "#" + "1" + "#" + str1 + "#" + str2;
+		} else {
+			sendData = sendData + "#" + list[1] + "#" + "0";
+		}
+        socket->write(sendData.toUtf8());//将sendData转为UTF-8编码并发送
+	} else if (list[0] == "s") { //获取信息以发送文件
+		query->exec(QString("select CIP, CPort from user where userName = '%1'").arg(list[1]));
+		while (query->next()) {
+			str1 = query->value(0).toString();
+			str2 = query->value(1).toString();
+		}
+		sendData = sendData + "#" + list[1] + "#" + "1" + "#" + str1 + "#" + str2;
+		socket->write(sendData.toUtf8());
+	} else if (list[0] == "i") { //离线消息
+		query = new QSqlQuery;
+		query->exec(QString("insert into msg (name1, name2, MSG) values('%1','%2','%3')").arg(list[1]).arg(list[2]).arg(list[3]));
+	} else if (list[0] == "y") { //获取信息以发送私聊信息
+
+		query->exec(QString("select CIP, CPort from user where userName = '%1'").arg(list[1]));
+		while (query->next()) {
+			str1 = query->value(0).toString();
+			str2 = query->value(1).toString();
+		}
+		sendData = sendData + "#" + list[1] + "#" + "1" + "#" + str1 + "#" + str2;
+		socket->write(sendData.toUtf8());
+	} else
+		return;
+}
+
+void Server::on_pushButton_Flash_clicked() {
+	//刷新用户列表
+	QString str = NULL;
+	query = new QSqlQuery;
+    //查询user表中所有的userName和status
+	query->exec("select userName, status from user ");
+    ui->listWidget->clear();//清除列表框(listWidget)中的所有项
+	while (query->next()) {
+		QString str = query->value(0).toString();
+		QString sss = query->value(1).toString();
+		QListWidgetItem *item = new QListWidgetItem;
+		if (sss == '1') {
+			item->setText(str + "在线");      //设置列表项的文本
+		} else {
+			item->setText(str + "下线");      //设置列表项的文本
+		}
+		ui->listWidget->addItem(item);     //加载列表项到列表框
+	}
+}

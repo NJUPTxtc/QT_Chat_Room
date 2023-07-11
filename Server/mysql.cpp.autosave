@@ -1,0 +1,84 @@
+#include "mysql.h"
+#include <QDebug>
+
+MySql::MySql() {
+
+}
+
+//初始化并建立一个数据库连接
+bool MySql::initsql() { 
+	//连接数据库
+    QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");//创建db,使用QODBC驱动来连接数据库
+    db.setHostName("localhost");//设置数据库连接的主机名为"localhost"
+    db.setDatabaseName("qq");//设置连接的数据库名为"qq"
+    db.setUserName("root");//设置数据库连接的用户名为"root"
+    db.setPort(3306);//设置数据库连接的端口号为3306
+    db.setPassword("123456789");//设置数据库连接的密码为"123456789"
+
+    //使用db.open()方法来尝试打开连接
+	if (db.open()) {
+        qDebug() << "数据库连接成功" << endl;
+	} else {
+        qDebug() << "数据库连接失败" << endl;
+		QMessageBox::warning(NULL, "error", "数据库连接失败");
+		return 0;
+	}
+}
+
+//基于MySQL数据库的登录函数,参数:Name和Password表示用户名和密码
+//作用是通过查询数据库验证用户的登录信息,并根据验证结果返回不同的整数值
+int MySql::Login(QString Name, QString Password) {
+    QString str1, str2;//存储查询结果
+	query = new QSqlQuery;
+
+    //根据输入的用户名(Name)在"user"表中查询对应的密码(Password)和在线状态(status)
+	query->exec(QString("select Password,status from user where userName='%1'").arg(Name));
+
+    //循环遍历查询结果,将密码和在线状态分别存储在str1和str2中
+	while (query->next()) {
+		str1 = query->value(0).toString(); //密码
+		str2 = query->value(1).toString(); //在线状态
+	}
+	qDebug() << str1 << str2 << endl;
+//    qDebug()<<"数据库连接成功,666666!"<<endl;
+	if (str2 == NULL)  return 3; //用户不存在
+	else if (str2 == '1')  return 2; //用户已经在线
+	else if ((str2 == '0') && (str1 == Password)) return 1; //用户名和密码都正确
+	else if ((str2 == '0') && (str1 != Password)) return 0; //密码错误
+}
+
+//在MySQL数据库中注册用户的函数,参数:Name表示用户名,Password表示密码,Mail表示邮箱
+bool MySql::Regist(QString Name, QString Password, QString Mail) {
+	char status = '0', Mail2 = '0', Mail3 = '0';
+
+    //检查数据库中是否已存在用户名为Name的记录
+	QString str = QString("select * from user where userName='%1'").arg(Name);
+    query = new QSqlQuery;//创建一个QSqlQuery对象query用于执行SQL查询操作
+    query->exec(str);//QSqlQuery的exec()函数是用于执行SQL查询语句的方法.它返回一个bool值,表示查询是否执行成功
+    query->last();//将查询结果指针移动到最后一条记录上
+    int record = query->at() + 1;//获取当前查询结果的行数,再加1得到记录数
+
+    //如果已存在具有相同用户名的记录,则返回false表示注册失败
+    if (record != 0) return false;
+
+    //如果数据库中不存在该用户名的记录,插入一个新的记录到user表中
+	str = QString("insert into user value('%1','%2','%3','%4','%5','%6')").arg(Name).arg(status).arg(Password).arg(Mail).arg(Mail2).arg(Mail3);
+    bool ret = query->exec(str);//数据模型重新查询数据,更新tableView显示
+	qDebug() << "到达数据库注册!" << str << endl;
+	return ret;
+}
+
+
+int MySql::findpwd(QString Name, QString Mail) { //找回密码
+	QString str1, str2, str3;
+	query = new QSqlQuery;
+	query->exec(QString("select Mail from user where userName='%1'").arg(Name));
+
+    //逐行遍历查询结果,将每一行中Mail字段的值存储在str1变量中
+	while (query->next()) {
+		str1 = query->value(0).toString(); //邮件
+	}
+	if ((str1 == Mail) /*&& (str2 == question) && (str3 == answer)*/) return 3; //信息正确
+	else if (str1 == NULL)   return 4; //用户不存在
+	else  return 2;  //邮件错误
+}
